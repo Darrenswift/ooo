@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OUT OF OFFICE - Do Not Disturb!</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --accent: #f43f5e;
+      --text: #f8fafc;
+      --subtext: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      background-color: var(--card-bg);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      max-width: 600px;
+      width: 100%;
+      border: 2px solid #334155;
+    }
+
+    .status-badge {
+      background-color: var(--accent);
+      color: white;
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: inline-block;
+      margin-bottom: 20px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    p.subtitle {
+      color: var(--subtext);
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+    }
+
+    .timer-container {
+      display: flex;
+      justify-content: space-around;
+      margin: 30px 0;
+      background: #0f172a;
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    .time-box {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .time-box .number {
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: #38bdf8;
+    }
+
+    .time-box .label {
+      font-size: 0.75rem;
+      color: var(--subtext);
+      text-transform: uppercase;
+    }
+
+    .funny-note {
+      background-color: #334155;
+      padding: 15px;
+      border-radius: 8px;
+      font-style: italic;
+      margin-bottom: 25px;
+      font-size: 0.95rem;
+    }
+
+    .btn {
+      background-color: #38bdf8;
+      color: #0f172a;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: #7dd3fc;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <span class="status-badge">✈️ Vacation Mode Activated</span>
+    <h1>I Am Currently Out of Office</h1>
+    <p class="subtitle">July 22, 2026 – August 10, 2026</p>
+
+    <div class="funny-note">
+      <p id="excuse">Loading current status...</p>
+    </div>
+
+    <h3>Time Until I Am Forced Back to Reality:</h3>
+    
+    <div class="timer-container">
+      <div class="time-box">
+        <span class="number" id="days">00</span>
+        <span class="label">Days</span>
+      </div>
+      <div class="time-box">
+        <span class="number" id="hours">00</span>
+        <span class="label">Hours</span>
+      </div>
+      <div class="time-box">
+        <span class="number" id="minutes">00</span>
+        <span class="label">Minutes</span>
+      </div>
+      <div class="time-box">
+        <span class="number" id="seconds">00</span>
+        <span class="label">Seconds</span>
+      </div>
+    </div>
+
+    <button class="btn" onclick="panicAlert()">🚨 Emergency Contact</button>
+  </div>
+
+  <script>
+    // Excuses generator
+    const excuses = [
+      "Currently perfecting the art of doing absolutely nothing.",
+      "If this is urgent, please print this email and gently set it on fire.",
+      "I am currently offline. Any unread emails will be deleted in the order they were received.",
+      "I'm on vacation. My reply times will be somewhere between 'delayed' and 'never'.",
+      "I am unreachable. If the server is on fire, try throwing water on it."
+    ];
+
+    document.getElementById('excuse').innerText = `"${excuses[Math.floor(Math.random() * excuses.length)]}"`;
+
+    // Target Date: August 10, 2026 at 09:00:00
+    const returnDate = new Date('August 10, 2026 09:00:00').getTime();
+
+    const countdown = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = returnDate - now;
+
+      if (distance < 0) {
+        clearInterval(countdown);
+        document.querySelector('.container').innerHTML = "<h1>I'm Back!</h1><p>Check your inbox... I dare you.</p>";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById('days').innerText = String(days).padStart(2, '0');
+      document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+      document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+      document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+    }, 1000);
+
+    function panicAlert() {
+      alert("🚨 EMERGENCY PROCEDURE:\n\n1. Take a deep breath.\n2. Ask someone else.\n3. Have a great day!");
+    }
+  </script>
+</body>
+</html>
