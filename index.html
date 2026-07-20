@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OUT OF OFFICE - Security Protocol Active</title>
+  <title>OUT OF OFFICE - Security Protocol</title>
   <style>
     :root {
       --bg: #0f172a;
       --card-bg: #1e293b;
-      --accent: #f43f5e;
+      --accent-pending: #f59e0b;
+      --accent-active: #f43f5e;
       --text: #f8fafc;
       --subtext: #94a3b8;
     }
@@ -42,7 +43,7 @@
     }
 
     .status-badge {
-      background-color: var(--accent);
+      background-color: var(--accent-pending);
       color: white;
       padding: 6px 16px;
       border-radius: 50px;
@@ -62,7 +63,7 @@
     }
 
     h1 {
-      font-size: 2.3rem;
+      font-size: 2.2rem;
       margin-bottom: 10px;
     }
 
@@ -128,7 +129,7 @@
 <body>
 
   <div class="container">
-    <span class="status-badge" id="badge">Vacation Pending</span>
+    <span class="status-badge" id="badge">⏳ Standby Mode</span>
     <h1 id="main-title">Out of Office Incoming</h1>
     <p class="subtitle">July 22, 2026 – August 10, 2026</p>
 
@@ -136,7 +137,7 @@
       <p id="excuse">Loading cyber protocol...</p>
     </div>
 
-    <h3 id="timer-title">Time Until OOO Starts:</h3>
+    <h3 id="timer-label">Time Until Disconnect:</h3>
     
     <div class="timer-container">
       <div class="time-box">
@@ -161,50 +162,52 @@
   </div>
 
   <script>
-    // Cybersecurity-themed humor
-    const excuses = [
-      "I am currently offline. If critical alerts trigger, please try turning the firewall off and on again (don't actually).",
-      "I am away from my desk. Any incoming emails will be quarantined as potential phishing attempts until August 10.",
-      "My status is set to Zero-Trust. I don't trust any emails received between July 22 and August 10.",
-      "I have temporarily revoked my own access privileges to my inbox. Please contact Level 1 support.",
-      "Currently enjoying air-gapped isolation from all work devices."
+    // Cyber Security Humor
+    const cyberJokes = [
+      "Any emails received between July 22 and August 10 will be quarantined as potential phishing attempts.",
+      "My inbox is operating under a strict Zero-Trust policy. I don't trust any work messages right now.",
+      "Currently revoking my own access tokens until my scheduled return.",
+      "If critical security alerts trigger, please try turning the firewall off and on again (don't actually).",
+      "Air-gapped isolation mode engaged for personal well-being."
     ];
 
-    document.getElementById('excuse').innerText = `"${excuses[Math.floor(Math.random() * excuses.length)]}"`;
+    document.getElementById('excuse').innerText = `"${cyberJokes[Math.floor(Math.random() * cyberJokes.length)]}"`;
 
-    // Dates
+    // Target timestamps
     const startDate = new Date('July 22, 2026 00:00:00').getTime();
     const returnDate = new Date('August 10, 2026 09:00:00').getTime();
 
     const countdown = setInterval(() => {
       const now = new Date().getTime();
 
-      // PHASE 1: Before July 22 (Counting down TO vacation)
+      // PHASE 1: BEFORE July 22 -> Count down TO July 22
       if (now < startDate) {
         document.getElementById('badge').innerText = "⏳ Vacation Countdown";
-        document.getElementById('main-title').innerText = "Preparing to Disconnect";
-        document.getElementById('timer-title').innerText = "Time Until Security Systems Go Offline:";
+        document.getElementById('badge').style.backgroundColor = "var(--accent-pending)";
+        document.getElementById('main-title').innerText = "Out of Office Starts Soon";
+        document.getElementById('timer-label').innerText = "Time Until Access Rights Revoked (July 22):";
         
         const distance = startDate - now;
-        updateDisplay(distance);
+        updateTimer(distance);
       } 
-      // PHASE 2: Between July 22 and Aug 10 (Vacation ACTIVE)
+      // PHASE 2: ON or AFTER July 22, BEFORE August 10 -> Count down TO August 10
       else if (now >= startDate && now < returnDate) {
-        document.getElementById('badge').innerText = "🛡️ Air-Gapped / OOO Active";
+        document.getElementById('badge').innerText = "🛡️ OOO Protocol Active";
+        document.getElementById('badge').style.backgroundColor = "var(--accent-active)";
         document.getElementById('main-title').innerText = "I Am Currently Out of Office";
-        document.getElementById('timer-title').innerText = "Time Until Access Rights Are Restored:";
+        document.getElementById('timer-label').innerText = "Time Until Access Rights Restored:";
         
         const distance = returnDate - now;
-        updateDisplay(distance);
+        updateTimer(distance);
       } 
-      // PHASE 3: After Aug 10
+      // PHASE 3: AFTER August 10 -> Expired / Back in office
       else {
         clearInterval(countdown);
         document.querySelector('.container').innerHTML = "<h1>Authentication Successful!</h1><p>I am back in the office. Triage mode activated for my inbox.</p>";
       }
     }, 1000);
 
-    function updateDisplay(distance) {
+    function updateTimer(distance) {
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -217,7 +220,7 @@
     }
 
     function panicAlert() {
-      alert("🚨 SOC INCIDENT RESPONSE:\n\n1. Verify your MFA prompt wasn't a phishing attempt.\n2. Do not click suspicious links.\n3. Escalate to the on-call engineer!\n\n(Enjoy your day!)");
+      alert("🚨 SOC INCIDENT RESPONSE:\n\n1. Verify your MFA prompt wasn't a phishing attempt.\n2. Do not click suspicious links.\n3. Escalate to the on-call engineer!\n\n(Have a great day!)");
     }
   </script>
 </body>
