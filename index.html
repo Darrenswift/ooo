@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OUT OF OFFICE - Do Not Disturb!</title>
+  <title>OUT OF OFFICE - Security Protocol Active</title>
   <style>
     :root {
       --bg: #0f172a;
@@ -62,7 +62,7 @@
     }
 
     h1 {
-      font-size: 2.5rem;
+      font-size: 2.3rem;
       margin-bottom: 10px;
     }
 
@@ -128,15 +128,15 @@
 <body>
 
   <div class="container">
-    <span class="status-badge">✈️ Vacation Mode Activated</span>
-    <h1>I Am Currently Out of Office</h1>
+    <span class="status-badge" id="badge">Vacation Pending</span>
+    <h1 id="main-title">Out of Office Incoming</h1>
     <p class="subtitle">July 22, 2026 – August 10, 2026</p>
 
     <div class="funny-note">
-      <p id="excuse">Loading current status...</p>
+      <p id="excuse">Loading cyber protocol...</p>
     </div>
 
-    <h3>Time Until I Am Forced Back to Reality:</h3>
+    <h3 id="timer-title">Time Until OOO Starts:</h3>
     
     <div class="timer-container">
       <div class="time-box">
@@ -157,34 +157,54 @@
       </div>
     </div>
 
-    <button class="btn" onclick="panicAlert()">🚨 Emergency Contact</button>
+    <button class="btn" onclick="panicAlert()">🚨 Report SOC Emergency</button>
   </div>
 
   <script>
-    // Excuses generator
+    // Cybersecurity-themed humor
     const excuses = [
-      "Currently perfecting the art of doing absolutely nothing.",
-      "If this is urgent, please print this email and gently set it on fire.",
-      "I am currently offline. Any unread emails will be deleted in the order they were received.",
-      "I'm on vacation. My reply times will be somewhere between 'delayed' and 'never'.",
-      "I am unreachable. If the server is on fire, try throwing water on it."
+      "I am currently offline. If critical alerts trigger, please try turning the firewall off and on again (don't actually).",
+      "I am away from my desk. Any incoming emails will be quarantined as potential phishing attempts until August 10.",
+      "My status is set to Zero-Trust. I don't trust any emails received between July 22 and August 10.",
+      "I have temporarily revoked my own access privileges to my inbox. Please contact Level 1 support.",
+      "Currently enjoying air-gapped isolation from all work devices."
     ];
 
     document.getElementById('excuse').innerText = `"${excuses[Math.floor(Math.random() * excuses.length)]}"`;
 
-    // Target Date: August 10, 2026 at 09:00:00
+    // Dates
+    const startDate = new Date('July 22, 2026 00:00:00').getTime();
     const returnDate = new Date('August 10, 2026 09:00:00').getTime();
 
     const countdown = setInterval(() => {
       const now = new Date().getTime();
-      const distance = returnDate - now;
 
-      if (distance < 0) {
+      // PHASE 1: Before July 22 (Counting down TO vacation)
+      if (now < startDate) {
+        document.getElementById('badge').innerText = "⏳ Vacation Countdown";
+        document.getElementById('main-title').innerText = "Preparing to Disconnect";
+        document.getElementById('timer-title').innerText = "Time Until Security Systems Go Offline:";
+        
+        const distance = startDate - now;
+        updateDisplay(distance);
+      } 
+      // PHASE 2: Between July 22 and Aug 10 (Vacation ACTIVE)
+      else if (now >= startDate && now < returnDate) {
+        document.getElementById('badge').innerText = "🛡️ Air-Gapped / OOO Active";
+        document.getElementById('main-title').innerText = "I Am Currently Out of Office";
+        document.getElementById('timer-title').innerText = "Time Until Access Rights Are Restored:";
+        
+        const distance = returnDate - now;
+        updateDisplay(distance);
+      } 
+      // PHASE 3: After Aug 10
+      else {
         clearInterval(countdown);
-        document.querySelector('.container').innerHTML = "<h1>I'm Back!</h1><p>Check your inbox... I dare you.</p>";
-        return;
+        document.querySelector('.container').innerHTML = "<h1>Authentication Successful!</h1><p>I am back in the office. Triage mode activated for my inbox.</p>";
       }
+    }, 1000);
 
+    function updateDisplay(distance) {
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -194,10 +214,10 @@
       document.getElementById('hours').innerText = String(hours).padStart(2, '0');
       document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
       document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
-    }, 1000);
+    }
 
     function panicAlert() {
-      alert("🚨 EMERGENCY PROCEDURE:\n\n1. Take a deep breath.\n2. Ask someone else.\n3. Have a great day!");
+      alert("🚨 SOC INCIDENT RESPONSE:\n\n1. Verify your MFA prompt wasn't a phishing attempt.\n2. Do not click suspicious links.\n3. Escalate to the on-call engineer!\n\n(Enjoy your day!)");
     }
   </script>
 </body>
